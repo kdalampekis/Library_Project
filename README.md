@@ -1,16 +1,17 @@
 # Library_Project
-# Student Library Website
+# School Library Network in Public Schools
 
-This is a web application built using Python, Flask, and HTML to create a student library website. The website allows students to browse and search for books, borrow and return books, and provides administrative features for library operators.
+This is a web application built using Python, Flask, and HTML to create a School Library Network application.
+The website allows users search for books and their details, reserve and review them, while providing administrative features for library operators.
 
 ## Features
 
-- User registration and login: Students can create an account and log in to the website to access the library features.
-- Book catalog: Students can browse and search for books in the library catalog.
-- Book details: Students can view detailed information about each book, including its title, author, description, and availability.
-- Borrowing and returning books: Students can borrow books from the library and return them when they are finished.
-- User dashboard: Students have a personal dashboard where they can view their borrowed books, due dates, and history.
-- Administrative features: Library operators have access to administrative features like adding new books, managing book availability, and viewing borrowing statistics.
+- User registration and login: Students, Professors and Operators can create an account and log in to the website to access the library features.
+- User profile: Users can view their personal information, digital library card, list of borrowings, reservations, reviews.
+- Book catalogue: Users can browse and search for books in their school library catalogue.
+- Book details: Users can view detailed information about each book, including its title, author, description, and availability.
+- Reserving and reviewing books: Users can rserve books, so a borrowing can be registered later. They can also review them and edit their reviews.
+- Administrative features: Library operators have access to administrative features like adding new books, editing existing books information, managing book availability, user accounts, and viewing borrowing statistics.
 
 ## Dependencies
 
@@ -23,17 +24,6 @@ This is a web application built using Python, Flask, and HTML to create a studen
 
 Use `pip3 install <package_name>` to install each individual Python package (library) directly for the entire system, or create a virtual environment with the [`venv`](https://docs.python.org/3/library/venv.html) module. The necessary packages for this app are listed in `requirements.txt` and can be installed all together via `pip install -r requirements.txt`.
 
-## What does Flask do
-
-Flask is a micro web framework used to create web applications. It uses [Jinja](https://jinja.palletsprojects.com/en/3.0.x/) as its templating engine, to generate static template files at runtime, and [Werkzeug](https://www.palletsprojects.com/p/werkzeug/) as its WSGI toolkit, to facilitate the communication between web server and application. When writing an app locally, Flask will launch a simple "development" server on which to run it.
-
-## How to Execute SQL Queries with Python and Flask
-
-In order to send queries to a database from a Python program, a connection between it and the databases' server must be established first. That is accomplished by a cursor object from the `Flask-MySQLdb` library, and using the appropriate methods (`execute`, `commit`).
-
-## Flask-WTForms
-
-This package integrates the [WTForms](https://wtforms.readthedocs.io/en/3.0.x/) library with Flask. WTForms is used for secure input (form) validation and form rendering inside the templates. It provides security features such as [CSRF protection](https://en.wikipedia.org/wiki/Cross-site_request_forgery). Each field of a `FlaskForm` class is essentially rendered as the corresponding input tag in HTML.
 
 ## Project Structure
 
@@ -137,9 +127,6 @@ The application will be accessible at `http://localhost:5000`.
 
 - Library operators can log in and access the administrative features from the dashboard.
 
-## Contributing
-
-Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
 
 ## License
 
