@@ -32,7 +32,7 @@ The website allows users search for books and their details, reserve and review 
 
 1. The first thing you need to do is clone the repository in a local working directory:
 
-git clone [ https://github.com/kdalampekis/student-library-website.git](https://github.com/kdalampekis/Library_Project)
+git clone https://github.com/kdalampekis/Library_Project
 
 You can also download it as a zip and extract it in the desired directory, if that suits you better.
 
