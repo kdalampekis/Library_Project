@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My reviews</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        #background{
+            min-height: auto;
+            width: 100%;
+            margin-bottom: -20px;
+
+        }
+  #top{
+      height: 20px;
+      width: 100%;
+      background:#2c7ad6;
+      line-height: 35px;
+      padding: 0px 20px 9px 100px;
+      box-sizing: border-box;
+      word-spacing:10px ;
+    }
+    #menu{
+      height: 50px;
+      width: 100%;
+      background:green;
+
+    }
+    #logo{
+      height: 50px;
+      width: 40%;
+      background:white;
+      text-align: center;
+      line-height: 50px;
+      font-size: 30px;
+      float: left;
+    }
+
+      #menu1{
+      height: 50px;
+      width: 60%;
+      background:white;
+      float: left;
+    }
+    #menu1 UL{
+      list-style: none;
+      padding-left: 500px;
+      box-sizing: border-box;
+
+    }
+    #menu1 LI{
+      height: 30px;
+      width: 180px;
+      text-align: center ;
+      display: inline-block;
+      line-height: 30px;
+      transform: translateY(-5px);
+      color: black;
+      font-size: 20px;
+
+    }
+    #menu1 LI:hover{
+      background: #2c7ad6;
+      color: white;
+      transition: all ease 1s;
+      border-radius: 3px;
+    }
+
+    #slider{
+      height:auto;
+      width: 100%;
+      background:url(../static/4.jpeg);
+      background-size: cover;
+      background-attachment: fixed;
+      animation-name:slider;
+      animation-duration: 20s;
+      animation-iteration-count:infinite ;
+      animation-delay: 3s;
+    }
+
+#slider-content {
+    display: inline-block;
+  height:auto;
+  width: 80%;
+  text-align: center;
+  color: darkblue;
+}
+.white-space {
+
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+  height:auto;
+  margin-top: 40px;
+  margin-bottom: 50px;
+  margin-left: 100px;
+  width: 70%;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 200px;
+  border-radius: 10px;
+  vertical-align: top;
+}
+
+.slider-content h2 {
+  font-size: 24px;
+  font-weight: bold;
+
+}
+
+.slider-content p {
+  font-size: 18px;
+}
+
+.slider-content ul {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.slider-content li {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+    @keyframes slider{
+
+      from{
+        background:url(../static/4.jpeg);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+      }
+      to{
+        background:url(../static/4.jpeg);
+        background-size: 100% 100%;
+        background-attachment: fixed;
+      }
+    }
+
+    .btn {
+  border-radius: 4px;
+  width: 15%;
+  height: 20px;
+  background-color: darkblue;
+  font-size: 15px;
+  color: #fff;
+  cursor: pointer;
+  justify-content: center;
+}
+
+{
+  text-decoration:none;
+}
+</style>
+</head>
+
+
+<body style="margin:0;">
+<div id="background">
+    <div id="top"></div>
+    <div id="menu">
+    <div id="logo"><b style="color:#2c7ad6 ;">SCHOOL LIBRARY NETWORK</b>
+    </div>
+    <div id="menu1">
+<ul>
+    <li><a href="{{ url_for('userprofile', user = user )}}"><span class="fa fa-user" style="font-weight: bold;"> Go Back </span></a></li>
+</ul>
+
+    </div>
+    </div>
+    <div id="slider">
+        <div id="slider-content" style="vertical-align: top;">
+            <div class="white-space">
+            <h2 style="transform: translateY(-180px);">My Reviews</h2>
+            <ul>
+
+
+    <style>
+
+    .review-grid {
+            transform: translateY(-130px);
+            display: grid;
+            align-items: center;
+            gap: 30px;
+        }
+
+  .likert-scale {
+  border: 1px solid darkblue;
+  width: 40%;
+  background-color: rgba(182, 202, 246, 0.8);
+  border-radius: 5px;
+  justify-content: center;
+  margin-top: 30px;
+  margin-left: 220px;
+}
+
+.likert-scale p {
+  text-align: left;
+  margin-left: 20px;
+}
+  .review {
+  border: 1px solid darkblue;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+    td {
+        padding: 7px;
+        margin-bottom: 10px;
+        margin-right: 90px;
+  }
+
+    </style>
+
+
+    <div class="review-grid">
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="review">
+                        <p style = "text-align: left; margin-left: 30px;"> Book Title:
+                            <strong>{{ review.title }}</strong></p>
+                        <p style = "text-align: left; margin-left: 30px;"> Book Isbn: {{ review.ISBN }}</p>
+                        <p style = "text-align: left; margin-left: 30px;"> Rating:
+                            <strong> {{ review.likert_value }} &#9733</strong></p>
+                        <p style = "text-align: left; margin-left: 30px;"> Free Text:</p>
+                        <p style="text-align: left; margin-left: 30px; font-style: italic">{{ review.free_text }}</p>
+
+                        <p style = "text-align: left; margin-left: 30px;"><span>Publication Status:</span>
+                            {% if review.publication_status == 'written' %}
+                               <span style="color: blue">waiting to be approved</span>
+                            {% else%}
+                                {% if  review.publication_status == 'declined' %}
+                                    <span style="color: red">
+                                        publication declined<br>
+                                        Your review was inappropriate.</span>
+                                {% else %}
+                                    <span style="color: green">{{review.publication_status}}</span>
+                                {% endif %}
+                            {% endif %}
+                        </p>
+                    <a href="{{ url_for('edit_review', review_isbn= review.ISBN) }}" style="width: 100%;">
+                        <button type="button" class="btn" > Edit</button>
+                    </a>
+                    </div>
+                {% endfor %}
+            {% else %}You haven't reviewed any book yet.<br>
+                    <br>To do so, visit a book's page from Home page and click on Review!.
+            {% endif %}
+
+            <div class="likert-scale">
+                <h2 style = "font-size: 17px;"> Likert Scale Used: </h2>
+                <p> 1 &#9733: Strongly Disliked </p>
+                <p> 2 &#9733: Disliked </p>
+                <p> 3 &#9733: Neutral </p>
+                <p> 4 &#9733: Liked </p>
+                <p> 5 &#9733: Strongly Liked </p>
+             </div>
+
+        </div>
+
+
+
+
+                </ul>
+            </div>
+      </div>
+    </div>
+
+</div>
+
+
+<style>
+    #down{
+      height: auto;
+      width: 100%;
+      background:#2c7ad6;
+      text-align: center;
+
+      padding-top: 50px;
+      margin-bottom: 0;
+      color: white;
+    }
+</style>
+
+
+<div id="down">
+</div>
+
+</body>
+</html>

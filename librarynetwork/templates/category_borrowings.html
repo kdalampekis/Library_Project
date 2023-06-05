@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Category Borrowings</title>
+</head>
+<body>
+    <h1>Welcome, {{ user.username }}!</h1>
+    <h2>Category Borrowings</h2>
+    <form method="POST" action="/category_borrowings">
+        <label for="category">Select a Category:</label>
+        <select name="category" id="category">
+            {% for category in categories %}
+            <option value="{{ category.thematic_category }}" {% if category.thematic_category == selected_category %}selected{% endif %}>{{ category.thematic_category }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if selected_category %}
+    <h3>Authors in the Category "{{ selected_category }}"</h3>
+    <ul>
+        {% for author in authors %}
+        <li>{{ author.author }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Professors Who Borrowed Books in the Category "{{ selected_category }}"</h3>
+    <ul>
+        {% for professor in professors %}
+        <li>{{ professor.professor_name }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Οperator Catalogue</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        #background {
+            min-height: auto;
+            width: 100%;
+            margin-bottom: -20px;
+
+        }
+
+        #top {
+            height: 20px;
+            width: 100%;
+            background: #2c7ad6;
+            line-height: 35px;
+            padding: 0px 20px 9px 100px;
+            box-sizing: border-box;
+            word-spacing: 10px;
+        }
+
+        #menu {
+            height: 50px;
+            width: 100%;
+            background: green;
+
+        }
+
+        #logo {
+            height: 50px;
+            width: 40%;
+            background: white;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            float: left;
+        }
+
+        #menu1 {
+            height: 50px;
+            width: 60%;
+            background: white;
+            float: left;
+        }
+
+        #menu1 UL {
+            list-style: none;
+            padding-left: 150px;
+            box-sizing: border-box;
+
+        }
+
+        #menu1 LI {
+            height: 30px;
+            width: 180px;
+            text-align: center;
+            display: inline-block;
+            line-height: 30px;
+            transform: translateY(-5px);
+            color: black;
+            font-size: 20px;
+
+        }
+
+        #menu1 LI:hover {
+            background: #2c7ad6;
+            color: white;
+            transition: all ease 1s;
+            border-radius: 3px;
+        }
+
+        #slider {
+            height: auto;
+            width: 100%;
+            background: url(../static/4.jpeg);
+            background-size: cover;
+            background-attachment: fixed;
+            animation-name: slider;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            animation-delay: 3s;
+        }
+
+        #slider-content {
+            display: inline-block;
+            height: auto;
+            width: 80%;
+            text-align: center;
+            color: darkblue;
+        }
+
+        .white-space {
+
+            display: inline-block;
+            flex-direction: column;
+            align-items: center;
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 50px;
+            margin-left: 100px;
+            width: 70%;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 200px;
+            border-radius: 10px;
+            vertical-align: top;
+        }
+
+        .slider-content h2 {
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+
+        .slider-content p {
+            font-size: 18px;
+        }
+
+        .slider-content ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .slider-content li {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        @keyframes slider {
+
+            from {
+                background: url(../static/4.jpeg);
+                background-size: 100% 100%;
+                background-attachment: fixed;
+            }
+            to {
+                background: url(../static/4.jpeg);
+                background-size: 100% 100%;
+                background-attachment: fixed;
+            }
+        }
+
+        .btn {
+            border-radius: 4px;
+            width: 50%;
+            height: 20px;
+            background-color: darkblue;
+            font-size: 15px;
+            color: #fff;
+            cursor: pointer;
+            justify-content: center;
+        }
+
+        #message {
+            margin-left: 200px;
+            width: 40%;
+            font-size: 18px;
+            background: darkblue;
+            box-sizing: border-box;
+            color: white;
+            font-weight: lighter;
+            text-align: center;
+            border-radius: 4px;
+            transform: translateY(-20px);
+
+        }
+
+    </style>
+</head>
+
+
+<body style="margin:0;">
+<div id="background">
+    <div id="top"></div>
+    <div id="menu">
+        <div id="logo"><b style="color:#2c7ad6 ;">SCHOOL LIBRARY NETWORK</b>
+        </div>
+        <div id="menu1">
+            <ul>
+                <li><a href="{{ url_for('adminprofile', user=user) }}"><span class="fa fa-user" style="color: black;"> My Profile </span></a>
+                </li>
+                <li><a href="{{ url_for('adminhome', user=user) }}"><span class="fa fa-book"
+                                                                             style="font-weight: bold;"> Home Page </span></a>
+                </li>
+                <li><a href="/logout"><span class="fa fa-user" style="color: black"> Logout </span></a></li>
+            </ul>
+
+        </div>
+    </div>
+    <div id="slider">
+       <div id="slider-content" style="vertical-align: top;">
+        <div class="white-space">
+            <h2 style="transform: translateY(-180px); margin-bottom: 30px;">Operators Catalogue</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="flash-messages" style="transform: translateY(-160px);">
+                        {% for message in messages %}
+                            <div id="message">{{ message }}</div>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+        <style>
+
+                    .user-grid {
+                        transform: translateY(-170px);
+                        display: grid;
+                        align-items: center;
+                        gap: 20px;
+                        margin-bottom: 80px;
+                    }
+
+                    .user-tab {
+                        transform: translateX(150px);
+                        display: flex;
+                        flex-direction: column;
+                        border: 1px solid darkblue;
+                        background-color: rgba(255, 255, 255, 0.8);
+                        transition: background-color 0.3s;
+                        border-radius: 5px;
+                        width: 60%;
+                        height: auto;
+                    }
+
+                    .user-tab:hover {
+                        background-color: rgba(214, 224, 239, 0.8);
+                    }
+
+                    .user-info {
+                        display: inline-flex;
+                        flex-direction: row;
+                        justify-content: center;
+                    }
+
+                    .user-info p {
+                        padding-inline: 20px;
+                        font-size: 20px;
+                    }
+
+                    .user-buttons {
+                        display: inline-flex;
+                        flex-direction: row;
+                    }
+
+                </style>
+
+
+            <h2 style="transform: translateY(-180px); text-align: left;">Pending Operators</h2>
+            <div class="user-grid">
+                {% if pending_users %}
+                    {% for pending_user in pending_users %}
+                        <div class="user-tab">
+                            <div class="user-info">
+                                <p>School ID:{{ pending_user.school_id }}</p>
+                                <p>{{ pending_user.username }}</p>
+                                <p>User ID:{{ pending_user.user_id }}</p>
+                            </div>
+                            <div class="user-buttons">
+                                <a style="width: 100%; margin-bottom: 15px;"
+                                   href="{{ url_for('operatorslistprofile', view_id=pending_user.user_id) }}">
+                                    <button type="button" class="btn"> View More Details</button>
+                                </a>
+                            </div>
+                                 <div class="user-buttons">
+                                    <a style="width: 100%; margin-bottom: 10px;"
+                                       href="{{ url_for('register_operator', user_id = pending_user.user_id) }}">
+                                        <button type="button" class="btn"> Register</button>
+                                    </a>
+                                </div>
+                        </div>
+                    {% endfor %}
+                    {% else %}There are no pending operators yet for this school library.
+                    {% endif %}
+            </div>
+
+            <!-- Registered Operators section -->
+            <h2 style="transform: translateY(-180px); text-align: left;">Registered Operators</h2>
+            <div class="user-grid">
+                {% if registered_users %}
+                    {% for registered_user in registered_users %}
+                        <div class="user-tab">
+                            <div class="user-info">
+                                <p>School ID:{{ registered_user.school_id }}</p>
+                                <p>{{ registered_user.username }}</p>
+                                <p>User ID:{{ registered_user.user_id }}</p>
+                            </div>
+                            <div class="user-buttons">
+                                <a style="width: 150%; margin-bottom: 15px;"
+                                   href="{{ url_for('operatorslistprofile', view_id=registered_user.user_id) }}">
+                                    <button type="button" class="btn"> View More Details</button>
+                                </a>
+                            </div>
+                            <div class="user-buttons">
+                                <a style="width: 100%; margin-bottom: 10px;"
+                                   href="{{ url_for('disable_operator', user_id=registered_user.user_id) }}">
+                                    <button type="button" class="btn" style="background-color: darkslategrey;">
+                                        Disable
+                                    </button>
+                                </a>
+                                <a style="width: 100%; margin-bottom: 10px;"
+                                   href="{{ url_for('delete_operator', user_id=registered_user.user_id) }}">
+                                    <button type="button" class="btn" style="background-color: darkred;"> Delete
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+         <h2 style="transform: translateY(-180px); text-align: left;">Disabled Operators</h2>
+                <div class="user-grid">
+                    {% if disabled_users %}
+                        {% for disabled_user in disabled_users %}
+                            <div class="user-tab">
+                                <div class="user-info">
+                                <p>School ID:{{ disabled_user.school_id }}</p>
+                                <p>{{ disabled_user.username }}</p>
+                                <p>User ID:{{ disabled_user.user_id }}</p>
+                                </div>
+                                <div class="user-buttons">
+                                    <a style="width: 100%;margin-bottom: 15px;"
+                                       href="{{ url_for('operatorslistprofile', view_id = disabled_user.user_id) }}">
+                                        <button type="button" class="btn"> View More Details</button>
+                                    </a>
+                                </div>
+                                <div class="user-buttons">
+                                    <a style="width: 100%; margin-bottom: 10px;"
+                                       href="{{ url_for('register_operator', user_id = disabled_user.user_id) }}">
+                                        <button type="button" class="btn" style="background-color: darkgreen;"> Enable
+                                        </button>
+                                    </a>
+                                    <a style="width: 100%; margin-bottom: 10px;"
+                                       href="{{ url_for('delete_operator', user_id = disabled_user.user_id) }}">
+                                        <button type="button" class="btn" style="background-color: darkred;"> Delete
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}There are no disabled operators yet for this school library.
+                    {% endif %}
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    #down {
+        height: auto;
+        width: 100%;
+        background: #2c7ad6;
+        text-align: center;
+
+        padding-top: 50px;
+        margin-bottom: 0;
+        color: white;
+    }
+</style>
+
+
+<div id="down">
+</div>
+</div>
+</body>
+</html>
