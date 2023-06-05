@@ -1,9 +1,9 @@
 # Library_Project
 
 # Project Participants
-Anastasia Askouni 03120046
-Konstantinos Dalampekis 03120055
-Konstantinos Spiridonos 03120198
+•	Anastasia Askouni 03120046
+•	Konstantinos Dalampekis 03120055
+•	Konstantinos Spiridonos 03120198
 
 # School Library Network in Public Schools
 
@@ -34,47 +34,86 @@ The website allows users search for books and their details, reserve and review 
 
 git clone https://github.com/kdalampekis/student-library-website.git
 
-2. Then change into /librarynetwork directory of:
+You can also download it as a zip and extract it in the desired directory, if that suits you better.
 
-cd student-library-website
+2. By running the DDL and DML files that you will find in directory sql scripts, create the database using a DBSM that supports MySQL/MariaDB.
+
+Just one of the many ways to do that will be presented below.
+
+Important! 
+In our __init__.py file in the librarynetwork directory we have configured the database connection using “project” as the name of the database.
+You can either create a “project” databse, or  if you choose a different name please update the following fragment of code in __init__.py.
+
+app.config["MYSQL_DB"] = ‘your_choice’
+
+The suggested way(including XAMPP installation):
+
+2.1	Install XAMPP.
+
+2.2	Open XAMPP control pannel and start the Apache web server and MySQL database server. These should be started every time you want to run the application to ensure the database connection.
+
+2.3	The MySQL database management tool (phpMyAdmin) will be needed for the database creation. You can go there through the XAMPP control panel or by visiting  http://localhost/phpmyadmin directly.
+
+2.4	Click on "New" to create a new database. Concerning the database name please consult the Important! Section that was provided earlier.
+
+2.5	Then by using the “Import” functionality, you should run the DDL and DML scripts, in that order.
+
+2.6	Your database is created!
+
+3. Let’s continue with the application setup. Get in the librarynetwork directory by executing the following command at your terminal:
+
+cd /your/path/librarynetwork
+
+where /your/path is the path to the directory you created before.
 
 
-3. Install the dependencies:
+4. During this step you will create the virtual environment for the application. The command needed is:
+
+python -m venv venv	or	python3 -m venv venv	
+
+depending on your python version.
+
+
+Wait a bit! That might take a moment.
+
+Make sure that you have installed python and added the path correctly befor.
+5. After step 3, there should be a venv directory now inside the librarynetwork one. Let’s activate it by executing(in /your/path/librarynetwork):
+
+venv\Scripts\activate
+
+You can execute venv\Scripts\deactivate when to exit the virtual environment later.
+
+6. Now you are ready to install all requirements. First go back to the initial directory by executing:
+
+cd ../		or 		cd /your/path (specific path needed)
+
+and then:
 
 pip install -r requirements.txt
 
+Wait until all files are installed before going on to the next step.
 
-4. Set up the database:
+7. You are ready to launch the application! Execute command (without changing directory from the initial):
 
-- Create a MySQL database and update the database connection details in the `config.py` file.
+python run.py	or	python3 run.py
 
-- Run the following command to create the necessary database tables:
+depending on your python version.
 
-  ```
-  python manage.py db upgrade
-  ```
+You will be shown this message. 
+* Serving Flask app 'librarynetwork' (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://localhost:5000 (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 857-543-339
 
-5. Start the application:
-
-python app.py
-
-
-The application will be accessible at `http://localhost:5000`.
-
-## Usage
-
-- Register a new account or log in with an existing account.
-
-- Browse and search for books in the library catalog.
-
-- View book details to see the availability and other information.
-
-- Borrow books by clicking the "Borrow" button and return them using the "Return" button.
-
-- Library operators can log in and access the administrative features from the dashboard.
-
+Visit `http://localhost:5000` and get started with exploring our application!
 
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
+
 
