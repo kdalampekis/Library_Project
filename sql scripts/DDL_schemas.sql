@@ -1,4 +1,3 @@
-use project;
 SET GLOBAL event_scheduler=ON;
 
 CREATE TABLE IF NOT EXISTS School_Unit
@@ -227,9 +226,17 @@ DELIMITER ;
 
 -- triggers for Borrowing
 DELIMITER //
-CREATE TRIGGER IF NOT EXISTS check_and_set_borrowing_details BEFORE INSERT ON Borrowing
+CREATE TRIGGER IF NOT EXISTS before_borrowing_insert BEFORE INSERT ON Borrowing
 FOR EACH ROW
 BEGIN
+    DECLARE user_status VARCHAR(10);
+    DECLARE school INT;
+    SELECT account_status INTO user_status FROM User WHERE user_id = NEW.user_id;
+    IF user_status = 'pending' OR user_status = 'disabled' AND NEW.return_date IS NULL THEN
+        SET @error_message = CONCAT('Cannot make a borrowing due to account status.', NEW.user_id, user_status);
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = @error_message;
+    END IF;
+
     IF NEW.starting_date > CURDATE() OR NEW.return_date < NEW.starting_date THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid borrowing dates.';
     END IF;
@@ -241,50 +248,16 @@ BEGIN
             IF(CURDATE() < NEW.expected_return, 'active', 'late')
         WHEN NEW.return_date > NEW.expected_return THEN 'completed late'
         ELSE 'completed'
-    END;
-END //
-DELIMITER ;
+        END;
 
-DELIMITER //
-CREATE TRIGGER IF NOT EXISTS valid_user_borrowing BEFORE INSERT ON Borrowing
-FOR EACH ROW
-BEGIN
-    DECLARE user_status VARCHAR(10);
-
-    SELECT account_status INTO user_status FROM User WHERE user_id = NEW.user_id;
-
-    IF user_status = 'pending' OR user_status = 'disabled' AND NEW.borrowing_status NOT IN ('completed', 'completed late') THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Cannot make a borrowing due to account status.';
-    END IF;
-END //
-DELIMITER ;
-
--- to alter copies available
-DELIMITER //
-
-DELIMITER //
-CREATE TRIGGER IF NOT EXISTS decrease_copies
-AFTER INSERT ON Borrowing
-FOR EACH ROW
-BEGIN
-    DECLARE school INT;
-    IF NEW.borrowing_status = 'active' OR NEW.borrowing_status = 'late' THEN
+    IF NEW.return_date IS NULL THEN
         SELECT school_id INTO school FROM User WHERE user_id = NEW.user_id;
         UPDATE Belongs_to
         SET copies_available = copies_available - 1
         WHERE school_id = school AND ISBN = NEW.ISBN;
     END IF;
-END//
-DELIMITER ;
 
--- to alter fields of User
-DELIMITER //
-CREATE TRIGGER IF NOT EXISTS increase_borrowings
-AFTER INSERT ON Borrowing
-FOR EACH ROW
-BEGIN
-    -- Increase current_borrowings by 1 for new borrowings
-    IF NEW.borrowing_status IN ('active', 'late') THEN
+    IF NEW.return_date IS NULL THEN
         UPDATE User
         SET current_borrowings = current_borrowings + 1, total_borrowings = total_borrowings + 1
         WHERE user_id = NEW.user_id;
@@ -294,7 +267,9 @@ BEGIN
         WHERE user_id = NEW.user_id;
     END IF;
 END //
+DELIMITER ;
 
+DELIMITER //
 CREATE TRIGGER IF NOT EXISTS updates_after_borrowing_return
 AFTER UPDATE ON Borrowing
 FOR EACH ROW
@@ -309,6 +284,7 @@ BEGIN
         SET copies_available = copies_available + 1
         WHERE school_id = (SELECT school_id FROM User WHERE user_id = NEW.user_id) AND ISBN = NEW.ISBN;
     END IF;
+
 END //
 DELIMITER ;
 
@@ -335,37 +311,6 @@ BEGIN
 END //
 DELIMITER ;
 
--- to alter fields of Reservation
-DELIMITER //
-CREATE TRIGGER IF NOT EXISTS serve_reservation
-AFTER INSERT ON Borrowing
-FOR EACH ROW
-BEGIN
-    -- Increase current_borrowings by 1 for new borrowings
-    IF NEW.reservation_id is NOT NULL THEN
-        UPDATE Reservation
-        SET reservation_status = 'served'
-        WHERE reservation_id = NEW.reservation_id;
-    END IF;
-END //
-DELIMITER ;
-
-DELIMITER //
-CREATE TRIGGER IF NOT EXISTS update_borrowing_status BEFORE UPDATE ON Borrowing
-FOR EACH ROW
-BEGIN
-    IF NEW.return_date < NEW.starting_date THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Invalid borrowing dates.';
-    END IF;
-
-    SET NEW.borrowing_status = CASE
-        WHEN NEW.return_date IS NULL THEN
-            IF(CURDATE() < NEW.expected_return, 'active', 'late')
-        WHEN NEW.return_date > NEW.expected_return THEN 'completed late'
-        ELSE 'completed'
-    END;
-END //
-DELIMITER ;
 
 -- triggers for reservation
 DELIMITER //
