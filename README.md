@@ -32,7 +32,7 @@ The website allows users search for books and their details, reserve and review 
 
 1. The first thing you need to do is clone the repository in a local working directory:
 
-git clone https://github.com/kdalampekis/student-library-website.git
+git clone [ https://github.com/kdalampekis/student-library-website.git](https://github.com/kdalampekis/Library_Project)
 
 You can also download it as a zip and extract it in the desired directory, if that suits you better.
 
@@ -64,7 +64,7 @@ The suggested way(including XAMPP installation):
 
 3. Let’s continue with the application setup. Get in the librarynetwork directory by executing the following command at your terminal:
 
-```cd /your/path/librarynetwork```
+```cd /your/path/Library_Project/librarynetwork```
 
 where /your/path is the path to the directory you created before.
 
@@ -88,7 +88,7 @@ You can execute ```venv\Scripts\deactivate``` when to exit the virtual environme
 
 6. Now you are ready to install all requirements. First go back to the initial directory by executing:
 
-```cd ../```		or 		```cd /your/path``` (specific path needed)
+```cd ../```		or 		```cd /your/path/Library_Project``` (specific path needed)
 
 and then:
 
