@@ -41,24 +41,26 @@ You can also download it as a zip and extract it in the desired directory, if th
 Just one of the many ways to do that will be presented below.
 
 Important! 
-In our [__init__.py] file in the librarynetwork directory we have configured the database connection using “project” as the name of the database.
-You can either create a “project” databse, or  if you choose a different name please update the following fragment of code in [__init__.py].
+In our __init__.py file in the librarynetwork directory we have configured the database connection using “project” as the name of the database.
+You can either create a “project” databse, or  if you choose a different name please update the following fragment of code in __init__.py.
 
 app.config["MYSQL_DB"] = ‘your_choice’
 
 The suggested way(including XAMPP installation):
 
-    2.1	Install XAMPP.
+  2.1	Install XAMPP.
 
-      2.2	Open XAMPP control pannel and start the Apache web server and MySQL database server. These should be started every time you want to run the application to ensure the database connection.
+  2.2	Open XAMPP control pannel and start the Apache web server and MySQL database server. These should be started every time you want to run the application to ensure the database connection.
 
-      2.3	The MySQL database management tool (phpMyAdmin) will be needed for the database creation. You can go there through the XAMPP control panel or by visiting  http://localhost/phpmyadmin directly.
+  2.3	The MySQL database management tool (phpMyAdmin) will be needed for the database creation. You can go there through the XAMPP control panel or by visiting  http://localhost/phpmyadmin directly.
 
-      2.4	Click on "New" to create a new database. Concerning the database name please consult the Important! Section that was provided earlier.
+  2.4	Click on "New" to create a new database. Concerning the database name please consult the Important! Section that was provided earlier.
 
-      2.5	Then by using the “Import” functionality, you should run the DDL and DML scripts, in that order.
+  2.5	Then by using the “Import” functionality, you should run the DDL and DML scripts, in that order.
 
-      2.6	Your database is created!
+  2.6	Your database is created!
+
+
 
 3. Let’s continue with the application setup. Get in the librarynetwork directory by executing the following command at your terminal:
 
