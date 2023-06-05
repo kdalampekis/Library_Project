@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Late to Return Users</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        #background {
+            min-height: auto;
+            width: 100%;
+            margin-bottom: -20px;
+
+        }
+
+        #top {
+            height: 20px;
+            width: 100%;
+            background: #2c7ad6;
+            line-height: 35px;
+            padding: 0px 20px 9px 100px;
+            box-sizing: border-box;
+            word-spacing: 10px;
+        }
+
+        #menu {
+            height: 50px;
+            width: 100%;
+            background: green;
+
+        }
+
+        #logo {
+            height: 50px;
+            width: 40%;
+            background: white;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            float: left;
+        }
+
+        #menu1 {
+            height: 50px;
+            width: 60%;
+            background: white;
+            float: left;
+        }
+
+        #menu1 UL {
+            list-style: none;
+            padding-left: 150px;
+            box-sizing: border-box;
+
+        }
+
+        #menu1 LI {
+            height: 30px;
+            width: 180px;
+            text-align: center;
+            display: inline-block;
+            line-height: 30px;
+            transform: translateY(-5px);
+            color: black;
+            font-size: 20px;
+
+        }
+
+        #menu1 LI:hover {
+            background: #2c7ad6;
+            color: white;
+            transition: all ease 1s;
+            border-radius: 3px;
+        }
+
+        #slider {
+            height: auto;
+            width: 100%;
+            background: url(../static/4.jpeg);
+            background-size: cover;
+            background-attachment: fixed;
+            animation-name: slider;
+            animation-duration: 20s;
+            animation-iteration-count: infinite;
+            animation-delay: 3s;
+        }
+
+        #slider-content {
+            display: inline-block;
+            height: auto;
+            width: 80%;
+            text-align: center;
+            color: darkblue;
+        }
+
+        .white-space {
+            display: inline-block;
+            flex-direction: column;
+            align-items: center;
+            height: auto;
+            margin-top: 40px;
+            margin-bottom: 50px;
+            margin-left: 100px;
+            width: 70%;
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 200px;
+            border-radius: 10px;
+            vertical-align: top;
+        }
+
+        .slider-content h2 {
+            font-size: 24px;
+            font-weight: bold;
+
+        }
+
+        .slider-content p {
+            font-size: 18px;
+        }
+
+        .slider-content ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .slider-content li {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        @keyframes slider {
+
+            from {
+                background: url(../static/4.jpeg);
+                background-size: 100% 100%;
+                background-attachment: fixed;
+            }
+            to {
+                background: url(../static/4.jpeg);
+                background-size: 100% 100%;
+                background-attachment: fixed;
+            }
+        }
+
+
+    </style>
+</head>
+
+
+<body style="margin:0;">
+<div id="background">
+    <div id="top"></div>
+    <div id="menu">
+        <div id="logo"><b style="color:#2c7ad6 ;">SCHOOL LIBRARY NETWORK</b>
+        </div>
+        <div id="menu1">
+            <ul>
+                <li><a href="{{ url_for('userprofile', user=user) }}"><span class="fa fa-user" style="color: black;"> My Profile </span></a>
+                </li>
+                <li><a href="{{ url_for('operatorhome', user=user) }}"><span class="fa fa-book"
+                                                                             style="font-weight: bold;"> Home Page </span></a>
+                </li>
+                <li><a href="/logout"><span class="fa fa-user" style="color: black"> Logout </span></a></li>
+            </ul>
+
+        </div>
+    </div>
+    <div id="slider">
+        <div id="slider-content" style="vertical-align: top;">
+            <div class="white-space">
+                <h2 style="transform: translateY(-180px);">Catalogue</h2>
+                <h2 style="transform: translateY(-180px);font-size: 20px">
+                    of users that are late to return
+                </h2>
+                <h2 style="transform: translateY(-180px); margin-bottom: 30px; font-size: 20px">
+                    at least one borrowed book
+                </h2>
+               <form action="/latetoreturn" method="POST">
+                <div class="search" style="transform: translateY(-180px);">
+                    <div class="search-bar">
+                        <select name="first" class="t">
+                            <option value="" disabled selected>Search for a First Name</option>
+                            {% for first in firsts %}
+                                <option value="{{ first }}">{{ first }}</option>
+                            {% endfor %}
+                        </select>
+                    </div><br>
+                <div class="search-bar">
+                    <select name="last" class="t">
+                        <option value="" disabled selected>Search for a Last Name</option>
+                        {% for last in lasts %}
+                            <option value="{{ last }}">{{ last }}</option>
+                        {% endfor %}
+                    </select>
+                </div><br>
+                    <div class="search-bar">
+                        <input type="number" name="days" class="t" placeholder="Search for Days of Delay" min="0" value="{{ days }}">
+                        <style>
+                            ::placeholder {
+                                color: black;
+                            }
+                        </style>
+                        </div><br>
+                    <button type="submit">Show &#32;<i class="fa fa-search"></i></button>
+                </div>
+
+
+                </form>
+
+                <style>
+
+                    .user-grid {
+                        transform: translateY(-170px);
+                        display: grid;
+                        align-items: center;
+                        gap: 20px;
+                        margin-bottom: 80px;
+                    }
+
+                    .user-tab {
+                        display: flex;
+                        flex-direction: column;
+                        border: 1px solid darkblue;
+                        background-color: rgba(255, 255, 255, 0.8);
+                        transition: background-color 0.3s;
+                        border-radius: 5px;
+                        width: auto;
+                        height: auto;
+                    }
+
+                    .user-tab:hover {
+                        background-color: rgba(214, 224, 239, 0.8);
+                    }
+
+                    .user-info {
+                        display: inline-flex;
+                        flex-direction: row;
+                        justify-content: center;
+                    }
+
+                    .user-info p {
+                        padding-inline: 20px;
+                        font-size: 20px;
+                    }
+
+            .search{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width:auto;
+            margin-bottom: 50px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            width:auto
+        }
+
+        .search-bar select {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        .search-bar input {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.1);
+            border: none;
+            outline: none;
+            flex-grow: 1;
+            font-size: 18px;
+            padding: 5px;
+        }
+
+        .search button {
+            width: auto;
+            margin-left: 10px;
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 5px;
+            outline: none;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .search button:hover {
+            background-color: #43A047;
+        }
+
+                </style>
+
+                <div class="user-grid">
+                    {% if late_users %}
+                        {% for late_user in late_users %}
+                            <div class="user-tab">
+                                <div class="user-info">
+                                    <p>ID: {{ late_user.user_id }}</p>
+                                    <p>{{ late_user.username }}</p>
+                                    <p>{{ late_user.first_name }}</p>
+                                    <p>{{ late_user.last_name }}</p>
+                                    <p> {{ late_user.days }} days of delay</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<style>
+    #down {
+        height: auto;
+        width: 100%;
+        background: #2c7ad6;
+        text-align: center;
+
+        padding-top: 50px;
+        margin-bottom: 0;
+        color: white;
+    }
+</style>
+
+
+<div id="down">
+</div>
+
+</body>
+</html>
