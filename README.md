@@ -80,7 +80,7 @@ Wait a bit! That might take a moment.
 
 Make sure that you have installed python and added the path correctly before.
 
-5. After step 3, there should be a venv directory now inside the librarynetwork one. Let’s activate it by executing(in /your/path/librarynetwork):
+5. After step 4, there should be a venv directory now inside the librarynetwork one. Let’s activate it by executing(in /your/path/librarynetwork):
 
 ```venv\Scripts\activate```
 
